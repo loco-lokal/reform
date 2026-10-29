@@ -1,0 +1,861 @@
+/*
+ * Reform styles. Colours, fonts, the display weight and the heading scale are tokens on .rf-root; the
+ * branding saved in the admin sets them on <body> (lib/branding.ts), the values here are only fallbacks.
+ * Font sizes are in rem so the configured base size (on <html>) scales them all.
+ */
+
+/* ---- base ---- */
+
+.rf-root {
+  /* Base palette */
+  --rf-ink: #14130f;
+  --rf-paper: #ffffff;
+  --rf-canvas: #f3f2ee;
+  --rf-muted: #5c5a52;
+  --rf-display-axes: "wdth" 80;
+
+  /* Derived tokens */
+  --rf-pill: color-mix(in srgb, var(--rf-ink) 6%, var(--rf-paper));
+  --rf-idle: color-mix(in srgb, var(--rf-ink) 8%, var(--rf-paper));
+  --rf-ink-soft: color-mix(in srgb, var(--rf-paper) 58%, var(--rf-ink));
+  --rf-ink-line: color-mix(in srgb, var(--rf-paper) 30%, var(--rf-ink));
+  --rf-display: var(--rf-font-display, Georgia), Georgia, "Times New Roman", serif;
+  --rf-body: var(--rf-font-body, system-ui), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Motion */
+  --rf-expo: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --rf-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --rf-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  position: relative;
+  display: flow-root;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: clip;
+  background: var(--rf-canvas);
+  color: var(--rf-ink);
+  font-family: var(--rf-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.rf-root) *,
+:where(.rf-root) *::before,
+:where(.rf-root) *::after {
+  box-sizing: border-box;
+}
+
+:where(.rf-root) :where(h1, h2, h3, p, ul) {
+  margin: 0;
+  padding: 0;
+}
+
+:where(.rf-root) a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(.rf-root) button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.rf-root :focus-visible {
+  outline: 3px solid var(--rf-ink);
+  outline-offset: 3px;
+}
+
+.rf-display {
+  font-family: var(--rf-display);
+  font-weight: var(--rf-display-weight, 800);
+  font-variation-settings: var(--rf-display-axes, normal);
+  font-style: var(--rf-display-style, normal);
+  font-feature-settings: "liga" 0, "dlig" 0;
+}
+
+.rf-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 81px;
+  padding: 0 21px;
+  border-radius: 55px;
+  background: var(--rf-pill);
+  white-space: nowrap;
+}
+
+.rf-nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.rf-nav-mark {
+  width: 16px;
+  height: 19px;
+}
+
+.rf-nav-cta {
+  margin-left: 4px;
+  padding: 10px 20px;
+  border-radius: 43px;
+  background: var(--rf-ink);
+  color: var(--rf-paper);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.rf-nav-cta:hover {
+  background: var(--rf-accent);
+  color: var(--rf-on-accent);
+}
+
+/* Contact dialog surface, used as the form card. */
+.rf-contact {
+  width: min(720px, 100%);
+  margin: 0 auto;
+  border-radius: 28px;
+  background: var(--rf-paper);
+  color: var(--rf-ink);
+  font-family: var(--rf-body);
+  box-shadow: 0 24px 80px rgb(20 19 15 / 0.08);
+  animation: rf-contact-in 0.55s var(--rf-expo);
+}
+
+@keyframes rf-contact-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+}
+
+@keyframes rf-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.rf-contact-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 40px;
+}
+
+.rf-contact-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rf-contact-eyebrow {
+  color: var(--rf-accent-text);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rf-contact-title {
+  font-size: calc(clamp(2rem, 5vw, 2.75rem) * var(--rf-heading-scale, 1));
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.rf-contact-text {
+  color: var(--rf-muted);
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.rf-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.rf-contact-services {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.rf-contact-services legend {
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.rf-contact-service {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 18px;
+  background: var(--rf-pill);
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition:
+    background 0.3s ease,
+    transform 0.45s var(--rf-spring);
+}
+
+.rf-contact-service:hover {
+  transform: translateY(-2px);
+}
+
+.rf-contact-service:not(:has(input:checked)):hover {
+  background: color-mix(in srgb, var(--rf-accent) 40%, var(--rf-pill));
+}
+
+.rf-contact-service:has(input:checked) {
+  background: var(--rf-accent);
+  color: var(--rf-on-accent);
+}
+
+.rf-contact-service input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rf-contact-service:has(input:focus-visible) {
+  outline: 3px solid var(--rf-ink);
+  outline-offset: 3px;
+}
+
+.rf-contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.rf-contact-field small {
+  color: var(--rf-muted);
+  font-weight: 500;
+}
+
+.rf-contact-field :is(input, textarea, select) {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  background: var(--rf-pill);
+  color: var(--rf-ink);
+  font: inherit;
+  font-weight: 500;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.rf-contact-field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.rf-contact-field :is(input, textarea, select):focus {
+  border-color: var(--rf-ink);
+  background: var(--rf-paper);
+  outline: none;
+}
+
+.rf-contact-field :is(input, textarea)::placeholder {
+  color: color-mix(in srgb, var(--rf-muted) 75%, transparent);
+}
+
+.rf-contact-hint {
+  width: 100%;
+  color: var(--rf-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.rf-contact-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 28px;
+  border-radius: 14px;
+  background: var(--rf-accent);
+  color: var(--rf-on-accent);
+  font-size: 1.125rem;
+  font-weight: 700;
+  animation: rf-pop 0.45s var(--rf-spring);
+  transition: background 0.3s ease;
+}
+
+.rf-contact-submit:not(:disabled):hover {
+  background: var(--rf-ink);
+  color: var(--rf-accent);
+}
+
+.rf-contact-submit:disabled {
+  opacity: 0.7;
+}
+
+.rf-contact-submit svg,
+.rf-button svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rf-contact-status {
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.rf-contact-status[data-state="success"] {
+  background: color-mix(in srgb, var(--rf-accent) 30%, var(--rf-paper));
+}
+
+.rf-contact-status[data-state="error"] {
+  background: #fde7e4;
+  color: #8a1c0c;
+}
+
+.rf-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--rf-ink);
+  color: var(--rf-paper);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.45s var(--rf-spring);
+}
+
+.rf-button:is(:hover, :focus-visible):not(:disabled) {
+  transform: scale(1.04);
+}
+
+.rf-button[data-tone="accent"] {
+  background: var(--rf-accent);
+  color: var(--rf-on-accent);
+}
+
+.rf-button[data-tone="soft"] {
+  background: var(--rf-pill);
+  color: var(--rf-ink);
+}
+
+.rf-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--rf-ink) 8%, transparent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ---- pages, fields and admin ---- */
+
+.rf-page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-height: 100vh;
+  padding: 16px 16px 32px;
+}
+
+.rf-page > header {
+  display: flex;
+  justify-content: center;
+}
+
+.rf-page > main {
+  flex: 1;
+}
+
+.rf-page-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  color: var(--rf-muted);
+  font-size: 0.8125rem;
+}
+
+.rf-page-footer a:hover {
+  color: var(--rf-accent-text);
+}
+
+.rf-contact-field label,
+.rf-contact-services legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.rf-required {
+  color: var(--rf-accent-text);
+}
+
+.rf-contact-field select {
+  appearance: none;
+  padding-right: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314130f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 18px;
+}
+
+.rf-contact-service::before {
+  content: "";
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.55;
+  /* Space Grotesk sits low in its line box; align the indicator with the text. */
+  translate: 0 2px;
+}
+
+.rf-contact-service[data-kind="checkbox"]::before {
+  border-radius: 5px;
+}
+
+.rf-contact-service:has(input:checked)::before {
+  border-width: 6px;
+  opacity: 1;
+}
+
+.rf-contact-service[data-kind="checkbox"]:has(input:checked)::before {
+  border-width: 2px;
+  background: currentColor;
+  /* Cut the tick out of the filled box so the accent behind it shows through, whatever its colour. */
+  --rf-tick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-10'/%3E%3C/svg%3E");
+  -webkit-mask: var(--rf-tick) center / 12px no-repeat, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: var(--rf-tick) center / 12px no-repeat exclude, linear-gradient(#000 0 0);
+}
+
+.rf-field-help {
+  color: var(--rf-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.rf-field-error {
+  color: #8a1c0c;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.rf-contact-field :is(input, textarea, select)[aria-invalid="true"] {
+  border-color: #c4361d;
+  background: #fde7e4;
+}
+
+.rf-contact-services[aria-invalid="true"] .rf-contact-service:not(:has(input:checked)) {
+  box-shadow: inset 0 0 0 1.5px #c4361d;
+}
+
+.rf-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.rf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Admin */
+.rf-contact[data-wide="true"] {
+  width: min(1100px, 100%);
+}
+
+.rf-table-wrap {
+  overflow-x: auto;
+}
+
+.rf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.rf-table th {
+  padding: 10px 12px;
+  color: var(--rf-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rf-table td {
+  padding: 14px 12px;
+  border-top: 1px solid var(--rf-idle);
+  vertical-align: top;
+}
+
+.rf-table td a {
+  font-weight: 700;
+}
+
+.rf-table td a:hover {
+  color: var(--rf-accent-text);
+}
+
+.rf-status {
+  /* Flex so the label stays centred when a flex row (.rf-meta) stretches the badge to its neighbours' height. */
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--rf-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rf-status[data-status="open"] {
+  background: var(--rf-accent);
+  color: var(--rf-on-accent);
+}
+
+.rf-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rf-link {
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.rf-response {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 18px;
+  background: var(--rf-pill);
+}
+
+.rf-response h2 {
+  font-size: calc(1.25rem * var(--rf-heading-scale, 1));
+}
+
+.rf-response dl {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.rf-response dt {
+  color: var(--rf-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.rf-response dd {
+  margin: 2px 0 0;
+  font-weight: 500;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.rf-response dd ul {
+  padding-left: 20px;
+}
+
+.rf-markdown {
+  max-height: 480px;
+  margin: 0;
+  padding: 20px;
+  overflow: auto;
+  border-radius: 14px;
+  background: var(--rf-ink);
+  color: var(--rf-paper);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+/* Admin navigation */
+.rf-nav-link {
+  padding: 8px 4px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.rf-nav-link:hover {
+  color: var(--rf-accent-text);
+}
+
+/* Branding page */
+.rf-branding {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+  align-items: start;
+  gap: 40px;
+}
+
+.rf-branding-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.rf-branding-section legend {
+  margin-bottom: 14px;
+  padding: 0;
+  font-size: calc(1.375rem * var(--rf-heading-scale, 1));
+}
+
+.rf-branding-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.rf-color {
+  display: flex;
+  gap: 8px;
+}
+
+.rf-contact-field .rf-color input[type="color"] {
+  flex: 0 0 52px;
+  width: 52px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.rf-contact-field .rf-color input:not([type="color"]) {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+.rf-asset {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rf-asset-preview {
+  display: grid;
+  flex: 0 0 52px;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: repeating-conic-gradient(var(--rf-pill) 0 25%, var(--rf-paper) 0 50%) 50% / 12px 12px;
+}
+
+.rf-asset-preview img {
+  max-width: 40px;
+  max-height: 40px;
+}
+
+.rf-contact-field .rf-asset input[type="file"] {
+  padding: 10px;
+  font-size: 0.8125rem;
+}
+
+.rf-asset-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.rf-contact-field .rf-asset-remove input {
+  width: auto;
+}
+
+.rf-branding-preview {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* The preview carries its own tokens and font size, so it is sized in em, not rem. */
+.rf-preview {
+  /* Derived tokens resolve where they are declared: recompute them from the preview's own values. */
+  --rf-pill: color-mix(in srgb, var(--rf-ink) 6%, var(--rf-paper));
+  --rf-idle: color-mix(in srgb, var(--rf-ink) 8%, var(--rf-paper));
+  --rf-display: var(--rf-font-display, Georgia), Georgia, "Times New Roman", serif;
+  --rf-body: var(--rf-font-body, system-ui), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em;
+  border-radius: 20px;
+  background: var(--rf-canvas);
+  color: var(--rf-ink);
+  font-family: var(--rf-body);
+  box-shadow: inset 0 0 0 1px var(--rf-idle);
+}
+
+.rf-preview-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.6em 1em;
+  border-radius: 999px;
+  background: var(--rf-pill);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.rf-preview-nav img {
+  width: 1em;
+  height: 1.2em;
+  object-fit: contain;
+}
+
+.rf-preview-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  padding: 1.5em;
+  border-radius: 16px;
+  background: var(--rf-paper);
+}
+
+.rf-preview-eyebrow {
+  color: var(--rf-accent-text);
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rf-preview-title {
+  font-size: calc(1.75em * var(--rf-heading-scale, 1));
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.rf-preview-text {
+  color: var(--rf-muted);
+}
+
+.rf-preview-option,
+.rf-preview-button {
+  padding: 0.75em 1em;
+  border-radius: 12px;
+  background: var(--rf-accent);
+  color: var(--rf-on-accent);
+  font-weight: 600;
+}
+
+.rf-preview-button {
+  text-align: center;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .rf-branding {
+    grid-template-columns: 1fr;
+  }
+
+  .rf-branding-preview {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .rf-contact {
+    border-radius: 22px;
+  }
+
+  .rf-contact-panel {
+    gap: 22px;
+    padding: 28px 20px;
+  }
+
+  .rf-contact-services {
+    grid-template-columns: 1fr;
+  }
+
+  .rf-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+    height: auto;
+    min-height: 64px;
+    gap: 4px 12px;
+    padding: 8px 12px;
+    border-radius: 32px;
+  }
+
+  .rf-nav-cta {
+    padding: 8px 14px;
+    font-size: 0.875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rf-contact,
+  .rf-contact-submit {
+    animation: none;
+  }
+}

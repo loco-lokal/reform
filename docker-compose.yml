@@ -1,0 +1,32 @@
+# Quick start: `docker compose up --build`, then open http://localhost:3000/admin.
+# Change the secrets before exposing this anywhere.
+services:
+  reform:
+    build: .
+    ports:
+      - "3000:80"
+    environment:
+      REFORM_DATABASE_URL: postgres://reform:reform@db:5432/reform
+      REFORM_API_SECRET: change-me-api-key
+      REFORM_ADMIN_PASSWORD: change-me-admin-password
+      REFORM_SESSION_SECRET: change-me-to-a-random-string-of-32-chars-or-more
+      REFORM_PUBLIC_URL: http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: reform
+      POSTGRES_PASSWORD: reform
+      POSTGRES_DB: reform
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reform"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  db:
