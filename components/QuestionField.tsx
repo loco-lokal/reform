@@ -57,6 +57,8 @@ export function QuestionField({ question: q, lang, value, error }: Props) {
       <div className="rf-contact-field">
         <fieldset
           className="rf-contact-services"
+          // aria-required is not allowed on a plain group, only on a radiogroup.
+          role={kind === 'radio' ? 'radiogroup' : undefined}
           aria-describedby={describedBy}
           aria-invalid={error ? true : undefined}
           aria-required={q.required && kind === 'radio' ? true : undefined}

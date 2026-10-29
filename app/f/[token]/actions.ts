@@ -2,7 +2,7 @@
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { HONEYPOT_FIELD, checkAnswers } from '@/lib/answers'
+import { HONEYPOT_FIELD, TOKEN_FIELD, checkAnswers } from '@/lib/answers'
 import { clientIp } from '@/lib/auth'
 import { config } from '@/lib/config'
 import { formStatus, type Answers } from '@/lib/forms'
@@ -20,7 +20,10 @@ export type SubmitState = {
 
 let limiter: RateLimiter | undefined
 
-export async function submitForm(token: string, prev: SubmitState, data: FormData): Promise<SubmitState> {
+// The token comes from a hidden field rather than a bound argument: with a bound action, a submit without
+// JavaScript that fails validation never got a response.
+export async function submitForm(prev: SubmitState, data: FormData): Promise<SubmitState> {
+  const token = String(data.get(TOKEN_FIELD) ?? '')
   const form = await getFormByToken(token)
   if (!form) redirect(`/f/${encodeURIComponent(token)}`)
   const lang = form.language

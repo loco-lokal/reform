@@ -9,6 +9,9 @@ export function fieldName(question: Pick<Question, 'id'>): string {
 /** Hidden field that only bots fill in. */
 export const HONEYPOT_FIELD = 'website_url'
 
+/** Hidden field with the link token of the form being answered. */
+export const TOKEN_FIELD = 'form_token'
+
 const MAX_LENGTH: Partial<Record<Question['type'], number>> = {
   short_text: 500,
   long_text: 10000,

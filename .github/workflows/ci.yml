@@ -38,6 +38,39 @@ jobs:
           REFORM_TEST_DATABASE_URL: postgres://reform:reform@localhost:5432/reform
       - run: npm run build
 
+  e2e:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: reform
+          POSTGRES_PASSWORD: reform
+          POSTGRES_DB: reform_e2e
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U reform"
+          --health-interval 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e
+        env:
+          REFORM_E2E_DATABASE_URL: postgres://reform:reform@localhost:5432/reform_e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
   docker:
     runs-on: ubuntu-latest
     steps:

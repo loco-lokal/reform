@@ -10,6 +10,11 @@ All notable changes are documented here. The project follows [Semantic Versionin
 - Password-protected admin with response view and Markdown copy/download.
 - Branding page in the admin (`/admin/branding`): name, website, uploaded logo and favicon, seven colours, heading and body font, heading weight, base font size and heading size, with a live preview and reset. Stored in the database and applied without a redeploy.
 - Imprint and privacy links, time zone and admin language through environment variables.
+- End-to-end tests with Playwright (`npm run e2e`) for the API, public forms, admin and branding, run in CI.
+
+### Fixed
+- A form submitted without JavaScript that failed validation never got a response; it now shows the errors.
+- Required single-choice and yes/no questions are exposed as radio groups, so `aria-required` is valid.
 
 ### Removed
 - **Breaking:** `REFORM_BRAND_NAME`, `REFORM_SITE_URL`, `REFORM_LOGO_URL`, `REFORM_ACCENT_COLOR`, `REFORM_ON_ACCENT_COLOR` and `REFORM_ACCENT_TEXT_COLOR` are no longer read. Set these in the admin under Branding instead.

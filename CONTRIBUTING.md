@@ -25,9 +25,11 @@ npm run typecheck
 npm test                                                    # unit tests
 REFORM_TEST_DATABASE_URL=postgres://reform:reform@localhost:5432/reform npm test   # plus database tests
 npm run build
+npx playwright install chromium                             # once
+npm run e2e                                                 # end-to-end tests, see e2e/
 ```
 
-The database tests **truncate** the `forms` table, so point them at a throwaway database. CI runs all of the above on every pull request.
+The database tests **truncate** the `forms` table, so point them at a throwaway database. The end-to-end tests build the app, start it on port 3100 with fixed test secrets (`e2e/env.ts`) and use their own `reform_e2e` database (`REFORM_E2E_DATABASE_URL`), which they truncate on every run. Changes to pages, the admin or the public form need an end-to-end test in `e2e/`. CI runs all of the above on every pull request.
 
 ## Guidelines
 - **Keep it small.** Reform does one job; dependencies are limited to Next.js, `pg` and `zod`. Please discuss before adding new ones.

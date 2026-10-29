@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useRef } from 'react'
 import { useFormStatus } from 'react-dom'
 import { submitForm, type SubmitState } from '@/app/f/[token]/actions'
-import { HONEYPOT_FIELD } from '@/lib/answers'
+import { HONEYPOT_FIELD, TOKEN_FIELD } from '@/lib/answers'
 import type { Language, Question } from '@/lib/forms'
 import { t } from '@/lib/i18n'
 import { QuestionField } from './QuestionField'
@@ -23,7 +23,7 @@ function SubmitButton({ lang }: { lang: Language }) {
 }
 
 export function FormView({ token, lang, questions }: { token: string; lang: Language; questions: Question[] }) {
-  const [state, action] = useActionState(submitForm.bind(null, token), initialState)
+  const [state, action] = useActionState(submitForm, initialState)
   const formRef = useRef<HTMLFormElement>(null)
 
   // After a failed submit, move to the first invalid field (or the message when none is marked).
@@ -43,6 +43,7 @@ export function FormView({ token, lang, questions }: { token: string; lang: Lang
           {state.formError}
         </p>
       )}
+      <input type="hidden" name={TOKEN_FIELD} value={token} />
       {questions.map((q) => (
         <QuestionField key={q.id} question={q} lang={lang} value={state.values[q.id]} error={state.errors[q.id]} />
       ))}

@@ -222,6 +222,7 @@ npm run dev
 | `npm run dev` | Development server on <http://localhost:3000> |
 | `npm test` | Unit tests (Vitest) |
 | `REFORM_TEST_DATABASE_URL=… npm test` | Also runs the database tests. They truncate the tables, so use a throwaway database. |
+| `npm run e2e` | End-to-end tests (Playwright) against a production build on port 3100. Uses `REFORM_E2E_DATABASE_URL` (default `postgres://reform:reform@localhost:5432/reform_e2e`, created if missing and truncated on every run). Run `npx playwright install chromium` once first. |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript |
 | `npm run build` | Production build (standalone output) |
